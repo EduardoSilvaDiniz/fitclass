@@ -1,0 +1,25 @@
+# ---------- STAGE 1: BUILD ----------
+FROM gradle:9.2.1-jdk21-ubi10 AS build
+
+WORKDIR /app
+
+# Copia tudo
+COPY . .
+
+# Compila o JAR (gera build/libs/xxx.jar)
+RUN ./gradlew clean bootJar --no-daemon
+
+# ---------- STAGE 2: RUNTIME ----------
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+# Copia o JAR compilado
+COPY --from=build /app/build/libs/fitclass-*.jar app.jar
+
+# Expõe porta padrão do Spring Boot
+EXPOSE 8080
+
+# Start
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
