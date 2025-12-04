@@ -1,25 +1,27 @@
-# ---------- STAGE 1: BUILD ----------
-FROM gradle:9.2.1-jdk21-ubi10 AS build
+# STAGE 1 — BUILD NATIVE IMAGE
+FROM ghcr.io/graalvm/graalvm-community:21 AS builder
 
 WORKDIR /app
 
-# Copia tudo
+RUN chmod +x /usr/share/bin/gu
+RUN gu install native-image
+
 COPY . .
 
-# Compila o JAR (gera build/libs/xxx.jar)
-RUN ./gradlew clean bootJar --no-daemon
+RUN ./gradlew clean nativeCompile --no-daemon
 
-# ---------- STAGE 2: RUNTIME ----------
-FROM eclipse-temurin:21-jre
+# STAGE 2 — RUNTIME ALPINE
+FROM alpine:3.20 AS runtime
+
+RUN apk add --no-cache ca-certificates
 
 WORKDIR /app
 
-# Copia o JAR compilado
-COPY --from=build /app/build/libs/fitclass-*.jar app.jar
+COPY --from=builder /app/build/native/nativeCompile/fitclass app
 
-# Expõe porta padrão do Spring Boot
+RUN chmod +x app
+
 EXPOSE 8080
 
-# Start
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["./app"]
 
