@@ -8,6 +8,7 @@ class FitclassApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
