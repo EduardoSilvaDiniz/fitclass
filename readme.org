@@ -1,0 +1,16 @@
+* Projeto
+o objetivo desse projeto é criar um sistema basico de controle de treino com o publico alvo sendo personal treiner.
+** Features desejada
+- dashboard financeiro
+- criar treinos, enviar para os alunos
+- gerenciar cobranças, promoções
+- marketing digital por email
+
+* TODO Proximos Passos
+- [ ] conectar o backend com supabase
+- [ ] criar chamadas para api
+- [ ] criar tela de cadastrar aluno
+- [ ] criar tela de treino
+- [ ] implementar tabela para aluno, treino, pagamentos
+- [ ] criar envio de cobrança e treino
+- [ ] criar dashboard financeiro
