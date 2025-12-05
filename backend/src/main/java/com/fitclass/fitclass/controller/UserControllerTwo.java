@@ -1,28 +1,25 @@
 package com.fitclass.fitclass.controller;
 
-import com.fitclass.fitclass.dto.UserDTO;
 import com.fitclass.fitclass.entity.User;
 import com.fitclass.fitclass.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/recurso")
 @RequiredArgsConstructor
 @CrossOrigin
-public class UserController {
+public class UserControllerTwo {
 
   private final UserService service;
-
-  @PostMapping
-  public ResponseEntity<Void> save(@RequestBody UserDTO user) {
-    service.save(user);
-    return ResponseEntity.ok().build();
-  }
 
   @GetMapping
   @Operation(description = "busca todos os usuarios e retonar uma lista")
@@ -30,11 +27,4 @@ public class UserController {
   public ResponseEntity<List<User>> findAll() {
     return ResponseEntity.ok(service.findAll());
   }
-
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete(@PathVariable Long id) {
-    service.deleteById(id);
-    return ResponseEntity.noContent().build();
-  }
 }
-

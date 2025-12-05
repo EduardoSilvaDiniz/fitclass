@@ -12,10 +12,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtils {
-  @Value("${projeto.jwtSecret}")
-  private String jwtSecret;
 
-  @Value("${projeto.jwtExpirationMs}")
+
+  @Value("${jwt.expiration}")
   private int jwtExpirationMs;
 
   public String generateTokenFromUserDetailsImpl(UserDetailsImpl userDetail) {
@@ -28,7 +27,7 @@ public class JwtUtils {
   }
 
   public Key getSigninKey() {
-    SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+    SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(publicKey));
     return key;
   }
 

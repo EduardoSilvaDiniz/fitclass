@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Table(name = "users")
@@ -32,6 +34,8 @@ public class User {
 
   @Column(name = "password")
   private String password;
+
+  private Set<Role> roles;
 
   public User() {}
 
